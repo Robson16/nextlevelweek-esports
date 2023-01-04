@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { FlatList, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,9 +13,9 @@ export function Home() {
   const [games, setGames] = useState<GameCardProps[]>([]);
 
   useEffect(() => {
-    fetch("http://192.168.0.102:3333/games")
-      .then(response => response.json())
-      .then(data => setGames(data));
+    axios("http://192.168.0.8:3333/games").then(response => {
+      setGames(response.data);
+    });
   }, []);
 
   const navigation = useNavigation();
