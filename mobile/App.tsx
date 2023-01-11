@@ -6,8 +6,8 @@ import { StatusBar } from 'react-native';
 import { Background } from './src/components/Background';
 import { Loading } from './src/components/Loading';
 import { Routes } from './src/routes';
-import { getPushNotificationToken } from './src/service/getPushNotificationToken';
-import './src/service/notificationConfigs';
+import { getPushNotificationToken } from './src/services/getPushNotificationToken';
+import './src/services/notificationConfigs';
 
 export default function App() {
 

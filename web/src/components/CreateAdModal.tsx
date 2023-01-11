@@ -1,9 +1,9 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
-import axios from "axios";
 import { Check, GameController } from "phosphor-react";
 import { FormEvent, useEffect, useState } from "react";
+import { api } from "../services/api";
 import { Input } from "./Form/Input";
 
 interface Game {
@@ -17,9 +17,13 @@ export function CreateAdModal() {
   const [useVoiceChannel, setUseVoiceChannel] = useState(false);
 
   useEffect(() => {
-    axios("http://localhost:3333/games").then(response => {
+    const fetchGames = async () => {
+      const response = await api.get('/games');
+
       setGames(response.data);
-    });
+    }
+
+    fetchGames().catch(console.error);
   }, []);
 
   async function handleCreateAd(event: FormEvent) {
@@ -33,7 +37,7 @@ export function CreateAdModal() {
     }
 
     try {
-      await axios.post(`http://localhost:3333/games/${data.game}/ads`, {
+      await api.post(`/games/${data.game}/ads`, {
         "name": data.name,
         "yearsPlaying": Number(data.yearsPlaying),
         "discord": data.discord,

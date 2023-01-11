@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { FlatList, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,15 +6,20 @@ import logoImage from "../../assets/logo-nlw-esports.png";
 import { Background } from "../../components/Background";
 import { GameCard, GameCardProps } from "../../components/GameCard";
 import { Heading } from "../../components/Heading";
+import { api } from "../../services/api";
 import { styles } from "./styles";
 
 export function Home() {
   const [games, setGames] = useState<GameCardProps[]>([]);
 
   useEffect(() => {
-    axios("http://192.168.0.8:3333/games").then(response => {
+    const fetchGames = async () => {
+      const response = await api.get('/games');
+
       setGames(response.data);
-    });
+    }
+
+    fetchGames().catch(console.error);
   }, []);
 
   const navigation = useNavigation();
@@ -34,7 +38,8 @@ export function Home() {
 
         <Heading
           title="Encontre seu duo!"
-          subtitle="Selecione o game que deseja jogar..."
+          // subtitle="Selecione o game que deseja jogar..."
+          subtitle={process.env.BASE_API}
         />
 
         <FlatList

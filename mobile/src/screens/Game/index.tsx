@@ -1,6 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,6 +9,7 @@ import { Background } from '../../components/Background';
 import { DuoCard, DuoCardProps } from "../../components/DuoCard";
 import { DuoMatch } from "../../components/DuoMatch";
 import { Heading } from "../../components/Heading";
+import { api } from "../../services/api";
 import { THEME } from "../../theme";
 import { styles } from "./styles";
 
@@ -27,15 +27,23 @@ export function Game() {
   }
 
   async function getDiscordUser(adsID: string) {
-    axios(`http://192.168.0.8:3333/ads/${adsID}/discord`).then(response => {
+    try {
+      const response = await api.get(`/ads/${adsID}/discord`);
+
       setDiscordDuoSelected(response.data.discord);
-    });
+    } catch (error) {
+      console.log("Não foi possível recuperar Discord ID: " + error);
+    }
   }
 
   useEffect(() => {
-    axios(`http://192.168.0.8:3333/games/${game.id}/ads`).then(response => {
+    const fetchAds = async () => {
+      const response = await api.get(`/games/${game.id}/ads`);
+
       setDuos(response.data);
-    });
+    }
+
+    fetchAds().catch(console.error);
   }, []);
 
   return (
