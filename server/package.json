@@ -8,9 +8,9 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "build": "prisma migrate deploy && tsc",
-    "dev": "ts-node-dev --exit-child src/server.ts",
-    "start": "node ./build/server.js"
+    "build": "tsc",
+    "dev": "prisma db push && ts-node-dev --exit-child src/server.ts",
+    "start": "prisma db push && node ./build/server"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
