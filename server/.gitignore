@@ -101,3 +101,6 @@ dist
 
 # Environment variables
 .env
+
+# Express build output
+build
