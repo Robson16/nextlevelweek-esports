@@ -9,6 +9,10 @@ The web client is deployed on Vercel here:
 
 https://nextlevelweek-esports.vercel.app/
 
+The backend API is available on Adaptable.io here:
+
+https://nextlevelweek-esports-api.adaptable.app/games
+
 <hr>
 <br>
 
