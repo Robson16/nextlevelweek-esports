@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Ad" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "gameId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "yearsPlaying" INTEGER NOT NULL,
@@ -9,6 +9,10 @@ CREATE TABLE "Ad" (
     "hourStart" INTEGER NOT NULL,
     "hourEnd" INTEGER NOT NULL,
     "useVoiceChannel" BOOLEAN NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "Ad_gameId_fkey" FOREIGN KEY ("gameId") REFERENCES "Game" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Ad_pkey" PRIMARY KEY ("id")
 );
+
+-- AddForeignKey
+ALTER TABLE "Ad" ADD CONSTRAINT "Ad_gameId_fkey" FOREIGN KEY ("gameId") REFERENCES "Game"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
